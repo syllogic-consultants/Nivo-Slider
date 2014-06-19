@@ -95,14 +95,23 @@
             var nivoCaption = $('.nivo-caption', slider);
             if(vars.currentImage.attr('title') != '' && vars.currentImage.attr('title') != undefined){
                 var title = vars.currentImage.attr('title');
-                if(title.substr(0,1) == '#') title = $(title).html();   
+				var titleCss ="nivo-caption";
+                if(title.substr(0,1) == '#'){ 
+					titleCss = $(title).attr('class');
+					titleCss = titleCss.replace('nivo-html-caption','').trim();
+					if( titleCss.length == 0) titleCss = 'nivo-caption-location';
+					titleCss = 'nivo-caption '+titleCss;
+					title = $(title).html();   
+				}
 
                 if(nivoCaption.css('display') == 'block'){
                     setTimeout(function(){
                         nivoCaption.html(title);
+						nivoCaption.attr('class',titleCss);
                     }, settings.animSpeed);
                 } else {
                     nivoCaption.html(title);
+					nivoCaption.attr('class',titleCss);
                     nivoCaption.stop().fadeIn(settings.animSpeed);
                 }
             } else {
